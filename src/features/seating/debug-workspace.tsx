@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { createDemo } from './demo'
-import { editorSchema, fillAssignments, rebuildEvent } from './editor'
+import { createEmptyDocument, editorSchema, rebuildEvent } from './editor'
 import type { EditorDocument } from './editor'
 import { decodeDocumentFragment, encodeDocumentFragment } from './url-state'
 import { optimizeSeating } from './actions'
@@ -25,7 +24,7 @@ export function DebugWorkspace(){
       try{
         let next=decodeDocumentFragment(location.hash)
         if(!next){const raw=localStorage.getItem('plassitin.editor.v2');if(raw)next=editorSchema.parse(JSON.parse(raw))}
-        if(!next){const event=createDemo();next=editorSchema.parse({version:2,event,links:{},decisions:{},assignments:fillAssignments(event)})}
+        if(!next)next=createEmptyDocument()
         next={...next,event:eventSchema.parse(rebuildEvent(next))}
         current.current=next;setDocument(next);setRun(null);setStageIndex(-1);setSelectedRule(null);setSelectedPerson(null);setError('')
         try{

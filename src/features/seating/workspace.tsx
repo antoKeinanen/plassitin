@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react'
-import { createDemo } from './demo'
 import { eventSchema } from './model'
 import type { Attendee, Clause } from './model'
 import { optimizeSeating } from './actions'
@@ -17,15 +16,8 @@ import { DEBUG_RUN_STORAGE, rememberSolverRun } from './solver-debug'
 
 const STORAGE='plassitin.editor.v2', LEGACY='plassitin.workspace.v1'
 const errorMessage=(error:unknown)=>error instanceof Error?error.message:'The change could not be saved.'
-function initialDocument():EditorDocument{
-  const event={...createDemo(),tables:createEmptyDocument().event.tables}
-  const document={version:2,event,links:{},decisions:{},assignments:fillAssignments(event)} satisfies EditorDocument
-  const migrated=editorSchema.parse(document)
-  return{...migrated,event:rebuildEvent(migrated)}
-}
-
 export function Workspace(){
-  const [document,setDocument]=useState<EditorDocument>(initialDocument),[ready,setReady]=useState(false)
+  const [document,setDocument]=useState<EditorDocument>(createEmptyDocument),[ready,setReady]=useState(false)
   const [selectedPerson,setSelectedPerson]=useState<string|null>(null),[selectedTable,setSelectedTable]=useState('t1')
   const [tablePopup,setTablePopup]=useState<{id:string;anchor:HTMLButtonElement}|null>(null)
   const [newPerson,setNewPerson]=useState<string|null>(null),[error,setError]=useState(''),[busy,setBusy]=useState(false)
