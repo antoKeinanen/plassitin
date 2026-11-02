@@ -1,4 +1,5 @@
 import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
+import { Analytics } from '@vercel/analytics/react'
 
 import appCss from '../styles.css?url'
 
@@ -36,6 +37,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         {children}
 
         <Scripts />
+        <Analytics beforeSend={event => ({ ...event, url: event.url.split(/[?#]/)[0] })} />
       </body>
     </html>
   )

@@ -79,6 +79,8 @@ Choose the Vercel account/team and link or create the project when prompted. Thi
 
 Run `npm run verify:vercel` to build the Vercel output and check both `/` and `/debug`, plus a real solver run, in a temporary directory without access to the source tree or its dependencies.
 
+Vercel Web Analytics is installed in the shared page shell. Enable Web Analytics in the Vercel project's Analytics settings, then redeploy to start collecting page views. Analytics URLs exclude query strings and the seating state in the URL fragment.
+
 Tests run the real optimizer against exhaustive small seating examples and cover mapping, codes, table resizing, import, camera geometry, URL roundtrips, and malformed/oversized link handling. Run the production server from the repository root and include `dist`, `workers`, package files, and installed dependencies.
 
 See [the split editor rationale](docs/architecture/split-editor.md) and [the optimization design](docs/architecture/design.md).
