@@ -1,0 +1,5 @@
+- [x] Ground
+- [x] Sketch (arena: frame, fan out, cross-judge, pick, graft, verify)
+- [x] Agree (no checkpoint requested)
+- [x] Implement
+- [x] Scrap assessed: no recurring friction; kept chosen architecture

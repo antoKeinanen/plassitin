@@ -1,0 +1,5 @@
+# Existing state flow
+
+Workspace owns EditorDocument and a current ref used to reject stale solver results. All edits call change; an effect validates and saves the document to localStorage. Startup currently loads v2 localStorage, otherwise migrates legacy state. The document contains event roster, tables, preferences and hard rules, chip links, resolution decisions, assignments and optional exact seat indices. UI selection/camera/modal state is transient.
+
+Options currently exports seating CSV and full JSON backup; JSON restore uses editorSchema and fillAssignments. CSV Import is a separate paste-preview-confirm workflow. rebuildEvent reconstructs derived clauses using saved interpretation and mapping decisions; fillAssignments repairs placement against tables/rules. Preserve these semantics and one Workspace state owner. URL state should carry the complete validated document, take precedence on opening, and retain localStorage as fallback. Avoid sending private preference data in request query strings: use a URL fragment. Encoding is not encryption.

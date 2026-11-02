@@ -1,0 +1,13 @@
+# Solver inspection
+
+Use the existing white #ffffff / map grey #eef0f2 / hairline #dce0e5 / blue #455d91 / muted red #9d5a54 palette and Arial type. Keep the existing map-left, table-right split, stacking on mobile. The graph is the main visual element. No headings, icons, cards, counters, or status strips. All labels identify controls or actual table data.
+
+Alternatives considered: a separate dashboard would violate the brief; placing logs over the seating editor obscures relationships. Use a dedicated split workspace at /debug, reachable from Options.
+
+Solver ownership remains in solver.server.ts. Both Arrange and /debug run the same worker and get the same typed SolverRun, including the input event snapshot, final result, and actual stage outcomes/assignments. Normal solve() remains a small compatibility interface for existing callers/tests and rethrows errors. Stages report proven priorities, incumbents, infeasibility and deadlines; they do not pretend to expose branch-and-bound internals or counterfactual reasons.
+
+The editor keeps the last accepted run in sessionStorage, separate from URL state. /debug uses the current URL snapshot (or local fallback) and reuses a matching trace; otherwise it shows current seating until Run solver is clicked. Debug runs never alter the editor's seating. A response is applied only to the debug snapshot that initiated it.
+
+Graph: attendees grouped by their actual stage table; shared tags are hub nodes to avoid drawing a clique; named requests, avoidance, mandatory separation and locks use distinct strokes. A selected person or rule filters/highlights its neighborhood and corresponding table rows. Textual resolution cells and accessible labels preserve meaning without color. Pan/zoom and keyboard activation remain available. Stage selection replays actual assignments and recomputes rule satisfaction from that stage, not from a fabricated explanation.
+
+Verification: the real worker's stage assignments are independently checked against capacities, locks and mandatory separation; tests confirm frozen packing priorities and final-plan equality. Infeasible, preflight-blocked and zero-deadline runs never invent stage assignments. Network tests cover compact tag hubs, per-stage rule outcomes, generic every-target requests and graph placement. Canonical serialization is checked so the last Arrange trace survives the editor-to-debug handoff. Browser checks confirmed live stage replay, guest/tag selection, matching cached traces, unchanged editor data during debug runs, and stacked mobile layout without horizontal overflow. Existing editor seating was restored after the normal Arrange integration check.

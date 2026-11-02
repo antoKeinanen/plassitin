@@ -1,0 +1,12 @@
+// Caller usage is in design.md. This sketch is the pre-implementation contract.
+type Clause =
+  | { state: 'resolved'; id: string; personId: string; kind: 'prefer' | 'avoid'; reference: string; weight: number; targets: [string, ...string[]] }
+  | { state: 'unresolved'; id: string; personId: string; kind: 'prefer' | 'avoid'; reference: string; weight: number }
+  | { state: 'ignored'; id: string; personId: string; kind: 'prefer' | 'avoid'; reference: string; weight: number }
+type Result =
+  | { kind: 'plan'; status: 'optimal' | 'feasible'; assignments: Record<string, string>; seconds: number }
+  | { kind: 'infeasible' | 'timeout'; message: string }
+function resolveReferences(input: ExtractedReference[], attendees: Attendee[]): Clause[] { throw new Error('not implemented') }
+function evaluatePlan(event: SeatingEvent, assignments: Record<string, string>): Report { throw new Error('not implemented') }
+async function interpretPreferences(input: SubmissionInput): Promise<{ clauses: Clause[]; mode: 'lists' | 'ai' }> { throw new Error('not implemented') }
+async function optimizeSeating(event: SeatingEvent): Promise<Result> { throw new Error('not implemented') }
