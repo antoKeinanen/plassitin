@@ -4,7 +4,7 @@ A split seating editor for sitsit. Long tables are on the left and an editable a
 
 ## Run
 
-Use Node.js 22 or newer.
+Use Node.js 24.
 
 ```sh
 npm install
@@ -63,6 +63,21 @@ npm run typecheck
 npm run build
 npm run preview
 ```
+
+## Deploy on Vercel
+
+Import this repository into Vercel and use the **TanStack Start** framework preset. Keep the default build command (`npm run build`) and output directory. No environment variables or database are required. The Nitro adapter generates the Vercel function and static assets; the function includes the solver worker and HiGHS WebAssembly runtime, with a 60-second execution limit.
+
+To deploy from this directory instead:
+
+```sh
+npx vercel login
+npx vercel
+```
+
+Choose the Vercel account/team and link or create the project when prompted. This creates a preview deployment. Use `npx vercel --prod` to publish to the project's production domain.
+
+Run `npm run verify:vercel` to build the Vercel output and check both `/` and `/debug`, plus a real solver run, in a temporary directory without access to the source tree or its dependencies.
 
 Tests run the real optimizer against exhaustive small seating examples and cover mapping, codes, table resizing, import, camera geometry, URL roundtrips, and malformed/oversized link handling. Run the production server from the repository root and include `dist`, `workers`, package files, and installed dependencies.
 
